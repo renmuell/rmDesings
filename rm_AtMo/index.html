@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SVG Animation</title>
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            margin: 0;
+            height: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #00ADFF;
+        }
+
+        #cosmos:active {
+            border: 5px dashed rgba(255,255,255,.5);
+        }
+
+        #cosmos {
+            position: absolute;
+            width: 90vw;
+            max-height: 100vh;
+            max-width: 100vh;
+            height: 90vw;
+            border: 5px dashed transparent;
+            bottom: 0;
+            border-radius: 50%;
+            left: 50%;
+            transform: translate(-50%,50%);
+        }
+
+        svg {
+            box-sizing: border-box;
+            transition: padding .1s ease-in-out;
+            cursor: pointer;
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                        supported by Chrome and Opera */
+        }
+
+        svg.active, 
+        svg:active {
+            padding: 10px;
+            cursor: pointer;
+            cursor: -webkit-grabbing;
+        }
+
+        svg#moon #superHappyFace {
+            display: none !important;
+        }
+
+        svg#moon.active #superHappyFace,
+        svg#moon:active #superHappyFace {
+            display: inline !important;
+        }
+
+        svg#moon.active #happyFace,
+        svg#moon:active #happyFace {
+            display: none !important;
+        }
+
+        svg#sun #superHappyFace {
+            display: none !important;
+        }
+
+        svg#sun.active #superHappyFace,
+        svg#sun:active #superHappyFace {
+            display: inline !important;
+        }
+
+        svg#sun.active #happyFace,
+        svg#sun:active #happyFace {
+            display: none !important;
+        }
+
+        svg#sun.active #shines,
+        svg#sun:active #shines {
+            animation-duration: 3s;
+        }
+
+        svg#cloud {
+            display: none;
+            width: 200px;
+            height: 200px;
+            overflow: visible;
+            position: absolute;
+            left: -100px;
+            top: 50px;
+            transform: translate(-50%, -50%);
+            animation: sun .7s linear infinite alternate;
+        }
+
+        svg#cloud2 {
+            display: none;
+            width: 200px;
+            height: 200px;
+            overflow: visible;
+            position: absolute;
+            left: 260px;
+            top: 170px;
+            transform: translate(-50%, -50%);
+            animation: sun .7s linear infinite alternate;
+        }
+
+        #moon-wrapper {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            top: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        svg#moon{
+            width: 160px;
+            height: 160px;
+            overflow: visible;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            animation: sun .7s linear infinite alternate;
+        }
+
+        svg#moon #hfEyeLeft,
+        svg#moon #hfEyeRight,
+        svg#moon #shfEyeLeft,
+        svg#moon #shfEyeRight {
+            transform-origin: center;
+            transform: rotateX(0deg) rotateY(0deg);
+            animation: eye .7s linear infinite alternate;
+        }
+
+        svg#moon #hfMouth,
+        svg#moon #shfMouth {
+            transform-origin: center;
+            transform: scale(1);
+            animation: mouth .7s linear infinite alternate;
+        }
+
+        svg#moon #glow {
+            transform-origin: center;
+            transform: scale(1);
+            animation: glow .7s linear infinite alternate;
+        }
+
+        #sun-wrapper {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            top: 0%;
+            transform: translate(-50%, -50%);
+        }
+
+        svg#sun {
+            width: 200px;
+            height: 200px;
+            overflow: visible;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            animation: sun .7s linear infinite alternate;
+        }
+
+        svg#sun #hfEyeLeft,
+        svg#sun #hfEyeRight,
+        svg#sun #shfEyeLeft,
+        svg#sun #shfEyeRight {
+            transform-origin: center;
+            transform: rotateX(0deg) rotateY(0deg);
+            animation: eye .7s linear infinite alternate;
+        }
+
+        svg#sun #shines {
+            transform-origin: center;
+            transform: rotateZ(0deg);
+            animation: shine 5s linear infinite;
+        }
+
+        svg#sun #hfMouth,
+        svg#sun #shfMouth {
+            transform-origin: center;
+            transform: scale(1);
+            animation: mouth .7s linear infinite alternate;
+        }
+
+        svg#sun #glow {
+            transform-origin: center;
+            transform: scale(1);
+            animation: glow .7s linear infinite alternate;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        @keyframes mouth {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes eye {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateX(20deg) rotateY(-5deg);
+            }
+        }
+
+        @keyframes sun {
+            0% {
+                transform: translate(-50%, -50%)
+            }
+
+            100% {
+                transform: translate(-50%, -52%)
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="cosmos">
+        <div id="sun-wrapper">
+        <svg version="1.1" id="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="349.361px" height="349.362px" viewBox="0 0 349.361 349.362" style="enable-background:new 0 0 349.361 349.362;"
+            xml:space="preserve">
+            <g id="sunBody">
+                <g id="body">
+                    <g id="bodyShadow">
+                        <g>
+                            <circle style="fill-rule:evenodd;clip-rule:evenodd;fill:#DDC518;" cx="174.775" cy="174.212" r="122" />
+                        </g>
+                    </g>
+                    <g id="bodyFront">
+                        <g>
+                            <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2A;" d="M88.612,87.927c47.62-47.621,124.828-47.62,172.448,0
+                    s47.62,124.828,0,172.448c-47.62,47.621-126.542,26.015-155.176-4.709C60.529,207,40.991,135.547,88.612,87.927z" />
+                        </g>
+                    </g>
+                </g>
+                <g id="happyFace">
+                    <g id="hfEyeLeft">
+                        <g>
+                            <circle style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" cx="135.275" cy="148.712" r="15.5" />
+                        </g>
+                    </g>
+                    <g id="hfEyeRight">
+                        <g>
+                            <circle style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" cx="222.275" cy="125.712" r="15.5" />
+                        </g>
+                    </g>
+                    <g id="hfMouth">
+                        <g>
+                            <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M236.729,181.66c-0.025-0.643-0.069-1.291-0.131-1.944
+                    c-0.062-0.653-0.143-1.312-0.242-1.976c-0.197-1.326-0.471-2.671-0.824-4.024c-1.404-5.446-3.422-7.957-5.966-8.419
+                    c-0.317-0.061-0.643-0.092-0.976-0.096c-0.334-0.003-0.675,0.021-1.023,0.068c-0.697,0.097-1.426,0.291-2.186,0.562
+                    c-1.519,0.545-3.162,1.396-4.941,2.42c-7.127,4.054-16.401,11.034-28.135,14.274c-11.73,3.16-24.165,1.523-33.233,1.934
+                    c-4.518,0.195-8.148,0.853-10.241,2.752c-1.048,0.953-1.715,2.222-1.952,3.947c-0.06,0.432-0.092,0.892-0.096,1.383
+                    c-0.005,0.491,0.019,1.014,0.07,1.57c0.104,1.112,0.323,2.359,0.671,3.76c2.497,11.378,12.325,19.621,22.949,23.669
+                    c5.292,2.081,10.673,3.296,16.007,3.646c0.668,0.043,1.337,0.071,2.007,0.085c0.669,0.014,1.34,0.014,2.011-0.003
+                    c0.672-0.016,1.344-0.047,2.019-0.094c0.674-0.048,1.35-0.111,2.027-0.19c2.71-0.319,5.454-0.906,8.253-1.811
+                    c11.111-3.56,21.526-11.961,27.504-20.538c3.01-4.328,4.988-8.779,5.895-13.547c0.226-1.192,0.385-2.407,0.475-3.646
+                    c0.045-0.618,0.072-1.243,0.082-1.874c0.005-0.315,0.006-0.632,0.002-0.95S236.741,181.981,236.729,181.66z" />
+                        </g>
+                    </g>
+                </g>
+                <g id="superHappyFace">
+                    <g id="shfMouth">
+                        <g>
+                            <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M236.729,181.66c-0.025-0.643-0.069-1.291-0.131-1.944
+                    c-0.062-0.653-0.143-1.312-0.242-1.976c-0.197-1.326-0.471-2.671-0.824-4.024c-1.404-5.446-3.422-7.957-5.966-8.419
+                    c-0.317-0.061-0.643-0.092-0.976-0.096c-0.334-0.003-0.675,0.021-1.023,0.068c-0.697,0.097-1.426,0.291-2.186,0.562
+                    c-1.519,0.545-3.162,1.396-4.941,2.42c-7.127,4.054-16.401,11.034-28.135,14.274c-11.73,3.16-24.165,1.523-33.233,1.934
+                    c-4.518,0.195-8.148,0.853-10.241,2.752c-1.048,0.953-1.715,2.222-1.952,3.947c-0.06,0.432-0.092,0.892-0.096,1.383
+                    c-0.005,0.491,0.019,1.014,0.07,1.57c0.104,1.112,0.323,2.359,0.671,3.76c2.497,11.378,12.325,19.621,22.949,23.669
+                    c5.292,2.081,10.673,3.296,16.007,3.646c0.668,0.043,1.337,0.071,2.007,0.085c0.669,0.014,1.34,0.014,2.011-0.003
+                    c0.672-0.016,1.344-0.047,2.019-0.094c0.674-0.048,1.35-0.111,2.027-0.19c2.71-0.319,5.454-0.906,8.253-1.811
+                    c11.111-3.56,21.526-11.961,27.504-20.538c3.01-4.328,4.988-8.779,5.895-13.547c0.226-1.192,0.385-2.407,0.475-3.646
+                    c0.045-0.618,0.072-1.243,0.082-1.874c0.005-0.315,0.006-0.632,0.002-0.95S236.741,181.981,236.729,181.66z" />
+                        </g>
+                    </g>
+                    <g id="shfEyeLeft">
+                        <g>
+                            <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M131.394,133.748c8.22-2.389,16.82,2.339,19.209,10.56
+                    c2.389,8.22-6.854-0.436-15.075,1.953c-8.22,2.389-12.306,14.917-14.694,6.696C118.445,144.736,123.173,136.136,131.394,133.748
+                    z" />
+                        </g>
+                    </g>
+                    <g id="shfEyeRight">
+                        <g>
+                            <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M237.052,121.487c-2.39-8.22-10.991-12.947-19.211-10.558
+                    c-8.22,2.389-12.947,10.99-10.557,19.21c2.389,8.22,7.009-4.626,15.229-7.016C230.733,120.735,239.441,129.708,237.052,121.487z
+                    " />
+                        </g>
+                    </g>
+
+                    <ellipse id="shfBlushLeft" transform="matrix(0.8204 0.5718 -0.5718 0.8204 131.2005 -32.2525)" style="fill-rule:evenodd;clip-rule:evenodd;fill:#F39232;"
+                        cx="116.939" cy="192.717" rx="12.652" ry="12.725" />
+
+                    <ellipse id="shfBlushRight" transform="matrix(0.899 -0.438 0.438 0.899 -41.1335 127.6557)" style="fill-rule:evenodd;clip-rule:evenodd;fill:#F39232;"
+                        cx="256.179" cy="153.002" rx="10.525" ry="11.528" />
+                </g>
+                <g id="glow_1_" style="opacity:0.2392;">
+                    <g>
+                        <circle style="fill-rule:evenodd;clip-rule:evenodd;fill:#F6EB5D;" cx="174.275" cy="172.712" r="131.5" />
+                    </g>
+                </g>
+            </g>
+            <g id="shines">
+                <g id="shine8">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M14.021,88.67c1.396-2.697,4.717-3.751,7.413-2.354
+                l26.638,13.8c2.697,1.397,3.751,4.717,2.354,7.414c-1.397,2.696-4.717,3.75-7.414,2.354L16.375,96.083
+                C13.678,94.687,12.624,91.367,14.021,88.67z" />
+                    </g>
+                </g>
+                <g id="shine7">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M299.135,241.454c1.429-2.68,4.76-3.694,7.441-2.266
+                l26.472,14.116c2.68,1.429,3.694,4.761,2.265,7.44c-1.429,2.681-4.761,3.695-7.441,2.266L301.4,248.896
+                C298.72,247.466,297.705,244.135,299.135,241.454z" />
+                    </g>
+                </g>
+                <g id="shine6">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M3.837,220.56l28.593-9.077
+                c2.896-0.919,5.988,0.683,6.907,3.578c0.919,2.895-0.683,5.986-3.578,6.906l-28.594,9.077c-2.896,0.919-5.987-0.683-6.906-3.578
+                C-0.66,224.571,0.941,221.479,3.837,220.56z" />
+                    </g>
+                </g>
+                <g id="shine5">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M313.559,127.032l28.699-8.737
+                c2.906-0.885,5.979,0.754,6.863,3.659c0.885,2.906-0.753,5.979-3.66,6.863l-28.699,8.737c-2.906,0.885-5.979-0.754-6.863-3.659
+                C309.015,130.989,310.653,127.917,313.559,127.032z" />
+                    </g>
+                </g>
+                <g id="shine4">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M86.317,327.928l13.8-26.638
+                c1.397-2.697,4.717-3.751,7.414-2.354s3.75,4.717,2.354,7.413l-13.801,26.638c-1.396,2.697-4.716,3.751-7.413,2.354
+                C85.974,333.944,84.92,330.625,86.317,327.928z" />
+                    </g>
+                </g>
+                <g id="shine3">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M239.19,42.787l14.116-26.472
+                c1.429-2.681,4.76-3.695,7.441-2.266c2.68,1.429,3.694,4.761,2.265,7.441l-14.115,26.472c-1.43,2.68-4.761,3.694-7.441,2.265
+                C238.775,48.799,237.761,45.467,239.19,42.787z" />
+                    </g>
+                </g>
+                <g id="shine2">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M215.061,310.025c2.895-0.919,5.987,0.683,6.906,3.578
+                l9.078,28.594c0.919,2.896-0.683,5.987-3.578,6.906c-2.895,0.919-5.987-0.683-6.906-3.578l-9.078-28.594
+                C210.564,314.037,212.166,310.944,215.061,310.025z" />
+                    </g>
+                </g>
+                <g id="shine1">
+                    <g>
+                        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#FDEB2E;" d="M121.955,0.24c2.906-0.885,5.979,0.754,6.863,3.66
+                l8.738,28.699c0.884,2.906-0.754,5.979-3.66,6.863s-5.979-0.754-6.863-3.659l-8.738-28.7
+                C117.411,4.198,119.049,1.125,121.955,0.24z" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <svg version="1.1" id="cloud" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+            y="0px" viewBox="0 0 304 195.25" enable-background="new 0 0 304 195.25" xml:space="preserve">
+            <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M63.63,195C28.49,195,0,166.53,0,131.41s28.49-63.58,63.63-63.58
+        c1.39,0,2.77,0.04,4.13,0.14C74.7,29.33,108.51,0,149.17,0c32.39,0,60.43,18.6,74,45.7c1.94-0.15,3.91-0.23,5.89-0.23
+        C270.45,45.47,304,79,304,120.36c0,41.36-33.55,74.89-74.94,74.89" />
+        </svg>
+
+        <svg version="1.1" id="cloud2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+            y="0px" viewBox="0 0 304 195.25" enable-background="new 0 0 304 195.25" xml:space="preserve">
+            <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M63.63,195C28.49,195,0,166.53,0,131.41s28.49-63.58,63.63-63.58
+    c1.39,0,2.77,0.04,4.13,0.14C74.7,29.33,108.51,0,149.17,0c32.39,0,60.43,18.6,74,45.7c1.94-0.15,3.91-0.23,5.89-0.23
+    C270.45,45.47,304,79,304,120.36c0,41.36-33.55,74.89-74.94,74.89" />
+        </svg>
+
+        </div>
+        <div id="moon-wrapper">
+                <svg version="1.1" id="moon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="272px" height="272px" viewBox="0 0 272 272" style="enable-background:new 0 0 272 272;" xml:space="preserve">
+           <g id="body">
+               <g id="bodyShadow">
+                   <g>
+                       <circle style="fill-rule:evenodd;clip-rule:evenodd;fill:#D8D9D9;" cx="138" cy="137" r="122"/>
+                   </g>
+               </g>
+               <g id="bodyLight">
+                   <g>
+                       <circle style="fill-rule:evenodd;clip-rule:evenodd;fill:#F8F7F7;" cx="132.5" cy="131.5" r="116.5"/>
+                   </g>
+               </g>
+               <g id="happyFace">
+                   <g id="hfEyeLeft">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M80.781,139.643c-0.745-4.478-7.812,3.083-15.758,6.092
+                               c-7.946,3.01-13.764,0.329-13.018,4.806c0.746,4.478,7.792,5.668,15.738,2.658C75.689,150.189,81.527,144.12,80.781,139.643z"/>
+                       </g>
+                   </g>
+                   <g id="hfEyeRight">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M166.111,108.27c-0.545-4.507-7.942,2.729-16.015,5.381
+                               c-8.073,2.65-13.765-0.288-13.22,4.219c0.545,4.506,7.53,6.01,15.604,3.359C160.553,118.577,166.656,112.775,166.111,108.27z"/>
+                       </g>
+                   </g>
+                   <g id="hfMouth">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M143.169,180.187c-2.359-7.466-11.067-5.408-20.624-2.393
+                               c-9.557,3.015-16.344,5.846-13.984,13.312s10.925,8.646,20.482,5.63C138.6,193.721,145.528,187.652,143.169,180.187z"/>
+                       </g>
+                   </g>
+               </g>
+               <g id="craters">
+                   <g id="crater3" style="opacity:0.4784;">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#B8B8B8;" d="M225.095,136.173c-7.386-6.688-18.563-4.802-24.967,4.216
+                               c-6.403,9.017-5.607,21.749,1.777,28.438c7.386,6.688,18.563,4.802,24.967-4.216
+                               C233.275,155.595,232.479,142.862,225.095,136.173z"/>
+                       </g>
+                   </g>
+                   <g id="crater2" style="opacity:0.4784;">
+                       <g>
+                           <path style="fill:#BDBCBC;" d="M87.205,66.881c-2.361-8.992-12.012-12.758-21.554-8.412S50.288,73.627,52.649,82.618
+                               c2.361,8.992,12.012,12.758,21.554,8.412S89.566,75.872,87.205,66.881z"/>
+                       </g>
+                   </g>
+                   <g id="crater1" style="opacity:0.4784;">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#C8C7C7;" d="M71.332,184.373c-3.051-5.457-9.701-8.033-14.854-5.754
+                               c-5.154,2.279-6.859,8.551-3.81,14.008c3.051,5.457,9.701,8.033,14.854,5.754C72.677,196.102,74.382,189.83,71.332,184.373z"/>
+                       </g>
+                   </g>
+               </g>
+               <g id="superHappyFace">
+                   <g id="shfEyeLeft">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M80.867,142.194c-0.851-4.459-7.923-5.484-15.796-2.289
+                               c-7.873,3.194-13.567,9.398-12.716,13.857c0.85,4.459,7.737-3.265,15.611-6.459C75.839,144.108,81.717,146.651,80.867,142.194z"
+                               />
+                       </g>
+                   </g>
+                   <g id="shfEyeRight">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M166.332,111.632c-0.487-4.513-7.452-6.107-15.559-3.561
+                               c-8.106,2.547-14.284,8.27-13.797,12.782c0.487,4.514,7.977-2.626,16.083-5.174
+                               C161.166,113.133,166.818,116.145,166.332,111.632z"/>
+                       </g>
+                   </g>
+                   <g id="shfMouth">
+                       <g>
+                           <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#010202;" d="M143.352,180.137c-2.359-7.466-11.067-5.408-20.624-2.393
+                               c-9.557,3.015-16.344,5.846-13.984,13.312s10.925,8.646,20.482,5.63C138.782,193.671,145.711,187.603,143.352,180.137z"/>
+                       </g>
+                   </g>
+                   <path id="shfBlushRight" style="fill-rule:evenodd;clip-rule:evenodd;fill:#EE6F48;" d="M42.713,166.43
+                       c1.895-4.119,6.442-6.012,10.159-4.227c3.715,1.784,5.192,6.569,3.298,10.688c-1.895,4.119-6.442,6.011-10.159,4.227
+                       C42.295,175.333,40.819,170.548,42.713,166.43z"/>
+                   
+                       <ellipse id="shfBlushLeft" transform="matrix(0.8204 0.5718 -0.5718 0.8204 104.607 -82.2129)" style="fill-rule:evenodd;clip-rule:evenodd;fill:#EE6F48;" cx="183.164" cy="125.399" rx="10.769" ry="10.832"/>
+               </g>
+           </g>
+           <g id="glow" style="opacity:0.2392;">
+               <g>
+                   <circle style="fill:#D8D9D9;" cx="136" cy="136" r="136"/>
+               </g>
+           </g>
+           </svg>
+        </div>
+    </div>
+
+    <script>
+
+        var cosmos = {
+            $sun: document.getElementById('sun'),
+            $moon: document.getElementById('moon'),
+            $cosmos: document.getElementById('cosmos'),
+            $sun_wrapper: document.getElementById('sun-wrapper'),
+            $moon_wrapper: document.getElementById('moon-wrapper'),
+            mouse_down: false,
+            touch_last_pos:{
+                x:undefined,
+                y:undefined
+            },
+            current_rotation: 0,
+            init: function () {
+                cosmos.$sun.addEventListener("mousedown", cosmos.mousedown);
+                cosmos.$moon.addEventListener("mousedown", cosmos.mousedown);
+                window.addEventListener("mousemove", cosmos.mousemove);
+                window.addEventListener("mouseup"  , cosmos.mouseup);
+
+                cosmos.$sun.addEventListener('touchstart', cosmos.touchstart)
+                cosmos.$moon.addEventListener('touchstart', cosmos.touchstart)
+                window.document.addEventListener('touchmove', cosmos.touchmove)
+                window.document.addEventListener('touchend', cosmos.touchend)
+                window.document.addEventListener('touchcancel', cosmos.touchend)
+            },
+            mousedown: function (event) {
+                if (event.which == 1) {
+                    event.preventDefault()
+                    cosmos.mouse_down = true;
+                    cosmos.touch_last_pos.x = event.clientX;
+                    cosmos.touch_last_pos.y = event.clientY;
+                    cosmos.start_current_rotation = cosmos.current_rotation;
+                }
+            },
+            mousemove: function (event) {
+                if (event.which == 1) {
+                    event.preventDefault()
+                    if (cosmos.mouse_down) {
+                        cosmos.update(event.clientX, event.clientY);
+                    }
+                }
+            },
+            mouseup: function (event) {
+                if (event.which == 1) {
+                    event.preventDefault()
+                    cosmos.mouse_down = false;
+                }
+            },
+            touchstart: function (event) {
+                event.preventDefault()
+                cosmos.$sun.classList.add('active')
+                cosmos.$moon.classList.add('active')
+                cosmos.touch_last_pos.x = event.touches[0].clientX;
+                cosmos.touch_last_pos.y = event.touches[0].clientY;
+                cosmos.start_current_rotation = cosmos.current_rotation;
+            },
+            touchmove: function (event) {
+                event.preventDefault()
+                cosmos.update(event.touches[0].clientX, event.touches[0].clientY);
+            },
+            touchend: function (event) {
+                event.preventDefault()
+                cosmos.$sun.classList.remove('active')
+                cosmos.$moon.classList.remove('active')
+            },
+            update: function (clientX, clientY) {
+                var cosmosTopLeftX = cosmos.$cosmos.offsetLeft - (cosmos.$cosmos.offsetWidth * 0.5)
+                var cosmosTopLeftY = cosmos.$cosmos.offsetTop + (cosmos.$cosmos.offsetWidth * 0.5)
+
+                var middleX = cosmosTopLeftX + (cosmos.$cosmos.offsetWidth/2);
+                var middleY = cosmosTopLeftY + (cosmos.$cosmos.offsetHeight/2);
+
+                var dAx = middleX - cosmos.touch_last_pos.x;
+                var dAy = middleY - cosmos.touch_last_pos.y;
+                var dBx = middleX - clientX;
+                var dBy = middleY - clientY;
+                var angle = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy);
+                var degree_angle = angle * (180 / Math.PI);
+
+                cosmos.current_rotation = cosmos.start_current_rotation + degree_angle;
+                cosmos.current_rotation = cosmos.current_rotation % 360;
+
+                if (cosmos.current_rotation < 0 ) {
+                    cosmos.current_rotation += 360;
+                }
+
+                cosmos.$cosmos.style.transform = "translate(-50%,50%) rotateZ(" + cosmos.current_rotation + "deg)"; 
+
+                if (cosmos.current_rotation < 180) {
+                    cosmos.$sun_wrapper.style.transform = "translate(-50%,-50%) rotateZ(" + -cosmos.current_rotation + "deg) scaleX(-1)"; 
+                } else {
+                    cosmos.$sun_wrapper.style.transform = "translate(-50%,-50%) rotateZ(" + -cosmos.current_rotation + "deg)"; 
+                }
+                if (cosmos.current_rotation < 180) {
+                    cosmos.$moon_wrapper.style.transform = "translate(-50%,-50%) rotateZ(" + -cosmos.current_rotation + "deg) scaleX(-1)"; 
+                } else {
+                    cosmos.$moon_wrapper.style.transform = "translate(-50%,-50%) rotateZ(" + -cosmos.current_rotation + "deg)"; 
+                }
+            }
+        }
+
+        cosmos.init();
+
+    </script>
+
+</body>
+
+</html>
